@@ -1,0 +1,71 @@
+<div class="container col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <h3>Editar persona</h3>
+        </div>
+        <div class="card-body">
+            <form action="">
+                <div class= "form-group">
+                    <label for="">Nombres</label>
+                    <input [(ngModel)]="persona.nombres" name="name" type="text" class="form-control">
+                </div>
+                <div class= "form-group">
+                    <label for="">Apellidos</label>
+                    <input [(ngModel)]="persona.apellidos" name="apellidos"type="text" class="form-control">
+                </div>
+
+                <div class= "form-group">
+                    <label for="">Documento</label>
+                    <input [(ngModel)]="persona.documento" name="documento"type="text" class="form-control">
+                </div>
+
+                <div class= "form-group">
+                    <label for="">Email</label>
+                    <input [(ngModel)]="persona.email" name="email"type="text" class="form-control">
+                </div>
+
+                <div class= "form-group">
+                    <label for="">Fecha de  Nacimiento</label>
+                    <input [(ngModel)]="persona.fechanacimiento" name="fechanacimiento"type="date" class="form-control">
+                </div>
+
+                <div class= "form-group">
+                    <label for="">contrasena</label>
+                    <input [(ngModel)]="persona.contrasena" name="contrasena"type="text" class="form-control">
+                </div>
+
+                <div class= "form-group">
+                    <label for="">Teléfono</label>
+                    <input [(ngModel)]="persona.telefono" name="telefono"type="text" class="form-control">
+                </div>
+
+                <div class= "form-group">
+                    <label for="">Usuario</label>
+                    <input [(ngModel)]="persona.usuario" name="usuario"type="text" class="form-control">
+                </div>
+
+                
+                <div class= "form-group">
+                    <label for="">Tipo de documento</label>                    
+                    <select name="persona.tipo" [(ngModel)]="persona.tipo">
+                        <option [ngValue]="persona.tipo" disabled selected>{{persona.tipo.nombre}}</option>
+                        <option [ngValue]="tipo" *ngFor="let tipo of tipos">{{tipo.nombre}}</option>
+                    </select>                      
+                </div>
+
+                <div class= "form-group">
+                    <label for="">Ciudad</label>
+                                        
+                    <select name="persona.ciudad" [(ngModel)]="persona.ciudad">  
+                        <option [ngValue]="persona.ciudad" disabled selected>{{persona.ciudad.nombre}}</option>
+                        <option [ngValue]="ciudad" *ngFor="let ciudad of ciudades">{{ciudad.nombre}}</option>
+                    </select>                    
+                </div>
+                <button (click)="Actualizar(persona)" class = 'btn btn-danger'>Guardar</button>
+            </form>
+                       
+        </div>
+    </div>
+</div>
+
+
