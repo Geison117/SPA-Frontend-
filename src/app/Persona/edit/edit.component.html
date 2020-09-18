@@ -1,71 +1,113 @@
-<div class="container col-md-6">
+<div class="container">
     <div class="card">
         <div class="card-header">
-            <h3>Editar persona</h3>
+            <h1>Editar personas</h1>
         </div>
         <div class="card-body">
-            <form action="">
-                <div class= "form-group">
-                    <label for="">Nombres</label>
-                    <input [(ngModel)]="persona.nombres" name="name" type="text" class="form-control">
-                </div>
-                <div class= "form-group">
-                    <label for="">Apellidos</label>
-                    <input [(ngModel)]="persona.apellidos" name="apellidos"type="text" class="form-control">
-                </div>
-
-                <div class= "form-group">
-                    <label for="">Documento</label>
-                    <input [(ngModel)]="persona.documento" name="documento"type="text" class="form-control">
-                </div>
-
-                <div class= "form-group">
+            <form #formNew="ngForm">
+                <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6" >
+                        <label for="">Nombres</label>                    
+                        <input [(ngModel)]="persona.nombres" #nombre="ngModel" name="name" type="text" class="form-control" maxlength="40" required id="nombre">
+                        <div class= "alert-danger">
+                            <small  class= "alert-danger" *ngIf = "(nombre.dirty || nombre.touched) && !nombre.valid" >El campo Nombres es requerido</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="">Apellidos</label>
+                        <input [(ngModel)]="persona.apellidos" #apellidos="ngModel" name="apellidos"type="text" class="form-control" maxlength="40" required>
+                        <div class= "alert-danger" *ngIf = "(apellidos.dirty || apellidos.touched) && !apellidos.valid">
+                            <small *ngIf = "apellidos.errors.required">Apellidos son requeridos requerido</small>
+                        </div>
+                    </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-12">
                     <label for="">Email</label>
-                    <input [(ngModel)]="persona.email" name="email"type="text" class="form-control">
+                    <input [(ngModel)]="persona.email" #email="ngModel" name="email"type="email" class="form-control" pattern='^[^@]+@[^@]+\.[a-zA-Z]{2,}$' maxlength="100" required>
+                    <div class= "alert-danger" *ngIf = "(email.dirty || email.touched) && !email.valid">
+                         <small *ngIf = 'email.errors.required'>El email es requerido</small>
+                        <small *ngIf = 'email.errors.pattern'>Ingrese un email válido</small>
+                    </div>
                 </div>
-
-                <div class= "form-group">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <label for="">Fecha de  Nacimiento</label>
-                    <input [(ngModel)]="persona.fechanacimiento" name="fechanacimiento"type="date" class="form-control">
+                    <input [(ngModel)]="persona.fechanacimiento" #fechanacimiento="ngModel" name="fechanacimiento"type="date" class="form-control" max = "{{date | date:'yyyy-MM-dd'}}" required>
+                    <div class= "alert-danger">
+                        <small class= "alert-danger" *ngIf = "(fechanacimiento.dirty || fechanacimiento.touched) && !fechanacimiento.valid">La fecha de nacimiento es requerida</small>
+                    </div>
+            </div>
+        </div>
+            
+            
+ 
+        <div class="row">
+            <div class="col-md-6" >
+                <label for="">Documento</label>
+                <input [(ngModel)]="persona.documento" #documento="ngModel" name="documento" type="number" class="form-control" pattern="[1-9]{1}\d{9}" minlength="10" maxlength="10" required>
+                <div class= "alert-danger" *ngIf = "(documento.dirty || documento.touched) && !documento.valid">
+                    <small *ngIf = 'documento.errors.required'>El documento es requerido</small>
+                    <small *ngIf = 'documento.errors.pattern'>El documento debe tener 10 dígitos, el primer dígito debe ser diferente de cero y no debe contener caracteres</small>
                 </div>
-
-                <div class= "form-group">
-                    <label for="">contrasena</label>
-                    <input [(ngModel)]="persona.contrasena" name="contrasena"type="text" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="select_doc">Tipo de documento</label>                    
+                <select name="persona.tipo" [(ngModel)]="persona.tipo" #tipo = 'ngModel' class="form-control" id="select_doc" required>
+                    <option disabled selected [ngValue]="persona.tipo">{{ persona.tipo.nombre }}</option>
+                    <option [ngValue]="tipo" *ngFor="let tipo of tipos">{{tipo.nombre}}</option>
+                </select>  
+                <div class= "alert-danger" *ngIf = "(tipo.dirty || tipo.touched) && !tipo.valid" > 
+                    <small *ngIf = "tipo.errors.required">El tipo de documento es requerido</small>
+                </div> 
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-md-6" >
+                    <label for="select_ciu">Ciudad</label>                                        
+                    <select name="persona.ciudad" [(ngModel)]="persona.ciudad" id="select_ciu"  #ciudad = 'ngModel' class="form-control" required>                         
+                        <option  selected  [ngValue]="persona.ciudad" disabled>{{ persona.ciudad.nombre }}</option> 
+                        <option [ngValue]="ciudad" *ngFor="let ciudad of ciudades">{{ciudad.nombre}}</option>                        
+                    </select>
+                    <div class= "alert-danger" *ngIf = "(ciudad.dirty || ciudad.touched) && !ciudad.valid" > 
+                        <small *ngIf = "ciudad.errors.required">La ciudad es requerida</small>
+                    </div> 
                 </div>
-
-                <div class= "form-group">
-                    <label for="">Teléfono</label>
-                    <input [(ngModel)]="persona.telefono" name="telefono"type="text" class="form-control">
-                </div>
-
-                <div class= "form-group">
-                    <label for="">Usuario</label>
-                    <input [(ngModel)]="persona.usuario" name="usuario"type="text" class="form-control">
-                </div>
-
                 
-                <div class= "form-group">
-                    <label for="">Tipo de documento</label>                    
-                    <select name="persona.tipo" [(ngModel)]="persona.tipo">
-                        <option [ngValue]="persona.tipo" disabled selected>{{persona.tipo.nombre}}</option>
-                        <option [ngValue]="tipo" *ngFor="let tipo of tipos">{{tipo.nombre}}</option>
-                    </select>                      
+                <div class="col-md-6">
+                    <label for="">Teléfono</label>
+                    <input [(ngModel)]="persona.telefono" name="telefono" #telefono = 'ngModel' type="text" class="form-control" minlength="7" maxlength="10" required>
+                    <div class= "alert-danger" *ngIf = "(telefono.dirty || telefono.touched) && !telefono.valid" > 
+                        <small *ngIf = "telefono.errors.required">El teléfono es requerida</small>
+                        <small *ngIf = "telefono.errors.minlength" >Son requeridos entre 7 y 10 dígitos</small>
+                    </div>
                 </div>
-
-                <div class= "form-group">
-                    <label for="">Ciudad</label>
-                                        
-                    <select name="persona.ciudad" [(ngModel)]="persona.ciudad">  
-                        <option [ngValue]="persona.ciudad" disabled selected>{{persona.ciudad.nombre}}</option>
-                        <option [ngValue]="ciudad" *ngFor="let ciudad of ciudades">{{ciudad.nombre}}</option>
-                    </select>                    
+            </div>
+            <div class="row">
+            <div class="col-md-12" >
+                <label for="">Usuario</label>
+                <input [(ngModel)]="persona.usuario" #usuario = 'ngModel' name="usuario" type="text" class="form-control" minlength="4" maxlength="30" required>
+                <div class= "alert-danger" *ngIf = "(usuario.dirty || usuario.touched) && !usuario.valid" > 
+                    <small *ngIf = "usuario.errors.required">El usuario es requerido</small>
+                    <small *ngIf = "usuario.errors.minlength" >Son requeridos entre 4 y 30 caracteres</small>
                 </div>
-                <button (click)="Actualizar(persona)" class = 'btn btn-danger'>Guardar</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="">Contraseña</label>
+                    <input [(ngModel)]="persona.contrasena" #contrasena = 'ngModel' maxlength="16" pattern="^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$" name="contrasena"type="password" class="form-control" id="contrasena"  required>
+                    <div class= "alert-danger" *ngIf = "(contrasena.dirty || contrasena.touched) && !contrasena.valid" >
+                        <small *ngIf = "contrasena.errors.required">La contraseña es requerida</small>
+                        <small *ngIf = "contrasena.errors.pattern" >La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula, al menos una mayúscula y al menos un caracter no alfanumérico.</small>
+                    </div>
+            </div>
+        </div>
+            <div class="row col-6 mt-3"><button type='submit' href="" (click)="Actualizar(persona)" [disabled]="!formNew.valid" class="btn btn-success">Guardar</button></div> 
+        </div>  
             </form>
-                       
         </div>
     </div>
 </div>
-
-

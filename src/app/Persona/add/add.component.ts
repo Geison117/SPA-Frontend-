@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Persona } from 'src/app/Modelo/Persona';
 import { Ciudad } from 'src/app/Modelo/Ciudad';
 import { Tipodocumento } from 'src/app/Modelo/Tipodocumento';
+import { NgForm } from '@angular/forms';
+
 
 @Component({
   selector: 'app-add',
@@ -15,10 +17,12 @@ export class AddComponent implements OnInit {
   persona:Persona=new Persona();
   ciudades: Ciudad[];
   tipos: Tipodocumento[];
+  date: Date = new Date();
 
   constructor(private router: Router, private service: ServiceService) { }
 
   ngOnInit(){
+    
     this.service.getCiudades()
       .subscribe(data => {
         this.ciudades = data;
@@ -37,5 +41,8 @@ export class AddComponent implements OnInit {
     })
     
   }
+
+
+  
 
 }

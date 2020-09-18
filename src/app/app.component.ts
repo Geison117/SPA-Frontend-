@@ -9,11 +9,13 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'ejemplo01';
+  
 
   constructor(private router:Router){}
 
   Listar(){
     this.router.navigate(['listar']);
+      
   }
 
   Nuevo(){

@@ -30,7 +30,6 @@ export class ServiceService {
   
 
   createPersona(persona: Persona){
-    console.log(persona)
     return  this.http.post<Persona>(this.Url,persona);    
   }
 
@@ -43,6 +42,8 @@ export class ServiceService {
   deletePersona(persona:Persona){
     return this.http.delete<Persona>(this.Url+"/"+persona.idpersona);
   }
+
+
 
 
 }

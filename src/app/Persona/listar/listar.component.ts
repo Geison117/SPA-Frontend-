@@ -11,6 +11,7 @@ import { Persona } from 'src/app/Modelo/Persona';
 export class ListarComponent implements OnInit {
 
   personas: Persona[];
+  filterPost = '';
   constructor(private service:ServiceService, private router:Router) { }
 
   ngOnInit(): void {
